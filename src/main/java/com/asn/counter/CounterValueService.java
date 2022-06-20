@@ -1,7 +1,5 @@
-package com.asn.counter.service;
+package com.asn.counter;
 
-import com.asn.counter.bo.Counter;
-import com.asn.counter.repository.CounterRepository;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

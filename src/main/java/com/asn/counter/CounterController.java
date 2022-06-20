@@ -1,9 +1,5 @@
-package com.asn.counter.controller;
+package com.asn.counter;
 
-import com.asn.counter.dto.CounterDTO;
-import com.asn.counter.service.CounterValueService;
-import com.asn.counter.bo.Counter;
-import com.asn.counter.repository.CounterRepository;
 import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

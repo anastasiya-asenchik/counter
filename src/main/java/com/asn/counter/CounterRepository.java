@@ -1,6 +1,5 @@
-package com.asn.counter.repository;
+package com.asn.counter;
 
-import com.asn.counter.bo.Counter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

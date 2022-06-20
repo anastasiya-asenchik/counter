@@ -1,4 +1,4 @@
-package com.asn.counter.bo;
+package com.asn.counter;
 
 import javax.persistence.Column;
 import javax.persistence.Table;

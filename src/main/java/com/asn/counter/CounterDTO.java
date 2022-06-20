@@ -1,4 +1,4 @@
-package com.asn.counter.dto;
+package com.asn.counter;
 
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
