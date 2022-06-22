@@ -2,6 +2,7 @@ package com.asn.counter;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,22 @@ public class CounterService {
                 .collect(Collectors.toList());
     }
 
-    public Counter incrementCounter(Long counterId) {
+    public void save(CounterDTO counter) {
+        counterRepository.save(modelMapper.map(counter, Counter.class));
+    }
+
+    public CounterDTO getCounter(Long id){
+        return modelMapper.map(counterRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Counter not found for id " + id)), CounterDTO.class);
+    }
+
+    public CounterDTO incrementCounter(Long counterId) {
         counterRepository.updateCounterValue(counterId);
-        return counterRepository.getById(counterId);
+        return modelMapper.map(counterRepository.getById(counterId), CounterDTO.class);
+    }
+
+    public void deleteCounter(Long id){
+        counterRepository.deleteById(id);
     }
 }
