@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CounterService {
 
-
     private final CounterRepository counterRepository;
     private final ModelMapper modelMapper;
 
