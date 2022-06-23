@@ -33,11 +33,12 @@ class CounterServiceTest {
     @Test
     void testGetAllCounters() {
         Counter counter = mock(Counter.class);
+        List<Counter> counters = List.of(counter, counter, counter);
         CounterDTO expected = mock(CounterDTO.class);
-        when(counterRepository.findAll()).thenReturn(List.of(counter));
+        when(counterRepository.findAll()).thenReturn(counters);
         when(modelMapper.map(counter, CounterDTO.class)).thenReturn(expected);
 
-        assertEquals(List.of(expected), counterService.getAllCounters());
+        assertEquals(List.of(expected, expected, expected), counterService.getAllCounters());
     }
 
     @Test
