@@ -30,6 +30,9 @@ class CounterServiceTest {
     @InjectMocks
     private CounterService counterService;
 
+    private static final Long COUNTER_ID = 1L;
+    private static final Long NON_EXISTENT_COUNTER_ID = 10000L;
+
     @Test
     void testGetAllCounters() {
         Counter counter = mock(Counter.class);
@@ -38,14 +41,18 @@ class CounterServiceTest {
         when(counterRepository.findAll()).thenReturn(counters);
         when(modelMapper.map(counter, CounterDTO.class)).thenReturn(expected);
 
-        assertEquals(List.of(expected, expected, expected), counterService.getAllCounters());
+        List<CounterDTO> actual = counterService.getAllCounters();
+
+        assertEquals(List.of(expected, expected, expected), actual);
     }
 
     @Test
     void testGetAllCounters_whenNoCountersAdded() {
         when(counterRepository.findAll()).thenReturn(List.of());
 
-        assertEquals(List.of(), counterService.getAllCounters());
+        List<CounterDTO> actual = counterService.getAllCounters();
+
+        assertEquals(List.of(), actual);
     }
 
     @Test
@@ -53,15 +60,17 @@ class CounterServiceTest {
         Counter counter = mock(Counter.class);
         CounterDTO expected = mock(CounterDTO.class);
 
-        when(counterRepository.findById(any())).thenReturn(Optional.of(counter));
+        when(counterRepository.findById(COUNTER_ID)).thenReturn(Optional.of(counter));
         when(modelMapper.map(counter, CounterDTO.class)).thenReturn(expected);
 
-        assertEquals(expected, counterService.getCounter(3L));
+        CounterDTO actual = counterService.getCounter(COUNTER_ID);
+
+        assertEquals(expected, actual);
     }
 
     @Test
     void test_whenGetNonExistentCounter_thenExceptionIsThrown() {
-        assertThrows(EntityNotFoundException.class, () -> counterService.getCounter(10000L));
+        assertThrows(EntityNotFoundException.class, () -> counterService.getCounter(NON_EXISTENT_COUNTER_ID));
     }
 
     @Test
@@ -77,23 +86,22 @@ class CounterServiceTest {
 
     @Test
     void testIncrementCounter() {
-        Long counterId = 4L;
         CounterDTO expected = mock(CounterDTO.class);
         Counter counter = mock(Counter.class);
 
-        when(counterRepository.getById(counterId)).thenReturn(counter);
+        when(counterRepository.getById(COUNTER_ID)).thenReturn(counter);
         when(modelMapper.map(counter, CounterDTO.class)).thenReturn(expected);
 
-        CounterDTO actual = counterService.incrementCounter(counterId);
+        CounterDTO actual = counterService.incrementCounter(COUNTER_ID);
 
-        verify(counterRepository, times(1)).updateCounterValue(counterId);
+        verify(counterRepository, times(1)).incrementCounterValueById(COUNTER_ID);
         assertEquals(expected, actual);
     }
 
     @Test
     void testDeleteCounter() {
-        counterService.deleteCounter(5L);
+        counterService.deleteCounter(COUNTER_ID);
 
-        verify(counterRepository, times(1)).deleteById(5L);
+        verify(counterRepository, times(1)).deleteById(COUNTER_ID);
     }
 }

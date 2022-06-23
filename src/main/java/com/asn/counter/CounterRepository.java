@@ -12,5 +12,5 @@ public interface CounterRepository extends JpaRepository<Counter, Long> {
     @Transactional
     @Modifying
     @Query(value = "UPDATE counter SET value = value + 1 WHERE id = ?1", nativeQuery = true)
-    void updateCounterValue(Long id);
+    void incrementCounterValueById(Long id);
 }

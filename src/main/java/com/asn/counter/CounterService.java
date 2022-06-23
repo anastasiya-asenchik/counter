@@ -33,7 +33,7 @@ public class CounterService {
     }
 
     public CounterDTO incrementCounter(Long counterId) {
-        counterRepository.updateCounterValue(counterId);
+        counterRepository.incrementCounterValueById(counterId);
         return modelMapper.map(counterRepository.getById(counterId), CounterDTO.class);
     }
 
